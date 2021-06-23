@@ -1,0 +1,22 @@
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner_wrapper {
+  text-align: center;
+}
+.title {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: rgb(229, 233, 229);
+}

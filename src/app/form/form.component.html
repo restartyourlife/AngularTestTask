@@ -7,6 +7,7 @@
       id="fio"
       formControlName="surname"
       (input)="inputOnSurname(this.form.get('surname'))"
+      (selected)="onSurnameSelected()"
       [ngClass]="{
         default: borderInputSurname == null,
         invalid: borderInputSurname == false,
@@ -28,8 +29,8 @@
       >
 
       <small *ngIf="this.form.get('surname')?.errors?.pattern"
-        >Поле "Фамилия" должно содержать только русские символы.</small
-      >
+        >Поле "Фамилия" должно содержать только русские символы.<br
+      /></small>
 
       <small *ngIf="this.form.get('surname')?.errors?.maxlength"
         >Поле "Фамилия" может содержать не более
@@ -39,6 +40,19 @@
         {{ this.form.get("surname")?.errors?.maxlength.actualLength }}
         символов.
       </small>
+
+      <small *ngIf="this.form.get('surname')?.errors?.hasWhiteSpaces"
+        >В поле "Фамилия" присутствуют двойные пробелы, пожалуйста уберите
+        их.</small
+      >
+      <small *ngIf="this.form.get('surname')?.errors?.minlength"
+        >Поле "Фамилия" может содержать не менее
+        {{ this.form.get("surname")?.errors?.minlength.requiredLength }}
+        символов.<br />
+        Сейчас в поле "Фамилия"
+        {{ this.form.get("surname")?.errors?.minlength.actualLength }}
+        символов.</small
+      >
     </div>
   </div>
   <div class="form_item">
@@ -48,6 +62,7 @@
       id="fio"
       formControlName="name"
       (input)="inputOnName(this.form.get('name'))"
+      (selected)="onNameSelected()"
       [ngClass]="{
         default: borderInputName == null,
         invalid: borderInputName == false,
@@ -66,8 +81,8 @@
       >
 
       <small *ngIf="this.form.get('name')?.errors?.pattern"
-        >Поле "Имя" должно содержать только русские символы.</small
-      >
+        >Поле "Имя" должно содержать только русские символы.<br
+      /></small>
 
       <small *ngIf="this.form.get('name')?.errors?.maxlength"
         >Поле "Имя" может содержать не более
@@ -75,6 +90,19 @@
         символов.<br />
         Сейчас в поле "Имя"
         {{ this.form.get("name")?.errors?.maxlength.actualLength }} символов.
+      </small>
+
+      <small *ngIf="this.form.get('name')?.errors?.hasWhiteSpaces"
+        >В поле "Имя" присутствуют двойные пробелы, пожалуйста уберите
+        их.</small
+      >
+
+      <small *ngIf="this.form.get('name')?.errors?.minlength">
+        Поле "Имя" может содержать не более
+        {{ this.form.get("name")?.errors?.minlength.requiredLength }}
+        символов.<br />
+        Сейчас в поле "Имя"
+        {{ this.form.get("name")?.errors?.minlength.actualLength }} символов.
       </small>
     </div>
   </div>
@@ -85,6 +113,7 @@
       id="fio"
       formControlName="patronymic"
       (input)="inputOnPatronymic(this.form.get('patronymic'))"
+      (selected)="onPatronymicSelected()"
       [ngClass]="{
         default: borderInputPatronymic == null,
         invalid: borderInputPatronymic == false,
@@ -100,8 +129,8 @@
       "
     >
       <small *ngIf="this.form.get('patronymic')?.errors?.pattern"
-        >Поле "Отчество" должно содержать только русские символы.</small
-      >
+        >Поле "Отчество" должно содержать только русские символы.<br
+      /></small>
 
       <small *ngIf="this.form.get('patronymic')?.errors?.maxlength"
         >Поле "Отчество" может содержать не более
@@ -109,6 +138,19 @@
         символов.<br />
         Сейчас в поле "Отчество"
         {{ this.form.get("patronymic")?.errors?.maxlength.actualLength }}
+        символов.
+      </small>
+
+      <small *ngIf="this.form.get('patronymic')?.errors?.hasWhiteSpaces"
+        >В поле "Отчество" присутствуют двойные пробелы, пожалуйста уберите
+        их.</small
+      >
+      <small *ngIf="this.form.get('patronymic')?.errors?.minlength">
+        Поле "Отчество" может содержать не менее
+        {{ this.form.get("patronymic")?.errors?.minlength.requiredLength }}
+        символов.<br />
+        Сейчас в поле "Отчество"
+        {{ this.form.get("patronymic")?.errors?.minlength.actualLength }}
         символов.
       </small>
     </div>
@@ -121,6 +163,9 @@
       name="login"
       class="form_input"
       formControlName="login"
+      [ngClass]="{
+        border: indication === true
+      }"
     />
     <div
       *ngIf="
@@ -143,6 +188,19 @@
         Сейчас в поле "Логин"
         {{ form.get("login")?.errors?.maxlength.actualLength }} сиволов.
       </small>
+
+      <small *ngIf="this.form.get('login')?.errors?.hasWhiteSpaces"
+        >В поле "Логин" присутствуют двойные пробелы, пожалуйста уберите
+        их.</small
+      >
+      <small *ngIf="this.form.get('login')?.errors?.minlength"
+        >Поле "Логин" может содержать не менее
+        {{ this.form.get("login")?.errors?.minlength.requiredLength }}
+        символов.<br />
+        Сейчас в поле "Фамилия"
+        {{ this.form.get("login")?.errors?.minlength.actualLength }}
+        символов.</small
+      >
     </div>
   </div>
   <div class="form_item">
@@ -157,6 +215,9 @@
       (keydown)="onPhoneKeyDown($event)"
       (paste)="onPhonePaste($event)"
       placeholder="+7 (___) ___ - __ - __"
+      [ngClass]="{
+        border: indication === true
+      }"
     />
     <div
       *ngIf="
@@ -186,6 +247,9 @@
       name="email"
       class="form_input"
       formControlName="email"
+      [ngClass]="{
+        border: indication === true
+      }"
     />
     <div
       *ngIf="

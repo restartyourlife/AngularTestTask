@@ -1,6 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { phoneNumberValidator } from '../phone.validators';
+import { whiteSpaceValidator } from '../whitespaces.validators';
 
 import { DadataConfig, DadataType } from '@kolkov/ngx-dadata';
 import { Router } from '@angular/router';
@@ -29,42 +30,48 @@ export class FormComponent {
     type: DadataType.fio,
   };
 
-  form: FormGroup;
+  form: FormGroup = new FormGroup({
+    surname: new FormControl('', [
+      Validators.minLength(2),
+      whiteSpaceValidator(),
+      Validators.maxLength(50),
+      Validators.pattern(/^[А-ЯЁа-яё\s]+$/),
+      Validators.required,
+    ]),
+    name: new FormControl('', [
+      Validators.minLength(2),
+      whiteSpaceValidator(),
+      Validators.maxLength(50),
+      Validators.pattern(/^[А-ЯЁа-яё\s]+$/),
+      Validators.required,
+    ]),
+    patronymic: new FormControl('', [
+      Validators.minLength(2),
+      whiteSpaceValidator(),
+      Validators.maxLength(50),
+      Validators.pattern(/^[А-ЯЁа-яё\s]+$/),
+    ]),
+    login: new FormControl('', [
+      Validators.minLength(2),
+      Validators.maxLength(20),
+      whiteSpaceValidator(),
+      Validators.pattern(/^[a-zA-Z\s]+$/),
+      Validators.required,
+    ]),
+    phoneNumber: new FormControl('', [
+      Validators.minLength(22),
+      phoneNumberValidator(),
+      Validators.required,
+    ]),
+    email: new FormControl('', [
+      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      Validators.required,
+    ]),
+    region: new FormControl(null),
+    checkbox: new FormControl(),
+  });
 
-  constructor(private router: Router) {
-    this.form = new FormGroup({
-      surname: new FormControl('', [
-        Validators.maxLength(50),
-        Validators.pattern(/^[А-ЯЁа-яё\s]+$/),
-        Validators.required,
-      ]),
-      name: new FormControl('', [
-        Validators.maxLength(50),
-        Validators.pattern(/^[А-ЯЁа-яё\s]+$/),
-        Validators.required,
-      ]),
-      patronymic: new FormControl('', [
-        Validators.maxLength(50),
-        Validators.pattern(/^[А-ЯЁа-яё\s]+$/),
-      ]),
-      login: new FormControl('', [
-        Validators.maxLength(20),
-        Validators.pattern(/^[a-zA-Z\s]+$/),
-        Validators.required,
-      ]),
-      phoneNumber: new FormControl('', [
-        Validators.minLength(22),
-        phoneNumberValidator(),
-        Validators.required,
-      ]),
-      email: new FormControl('', [
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        Validators.required,
-      ]),
-      region: new FormControl(null),
-      checkbox: new FormControl(),
-    });
-  }
+  constructor(private router: Router) {}
 
   inputOnSurname(event: any) {
     if (event.value == '' && event?.errors) {
@@ -157,10 +164,27 @@ export class FormComponent {
       }
     }
   }
+  onSurnameSelected() {
+    if (!this.form.get('surname')?.errors) {
+      this.borderInputSurname = true;
+    }
+  }
+  onNameSelected() {
+    if (!this.form.get('name')?.errors) {
+      this.borderInputName = true;
+    }
+  }
+  onPatronymicSelected() {
+    if (!this.form.get('patronymic')?.errors) {
+      this.borderInputPatronymic = true;
+    }
+  }
 
   submit() {
     if (this.form.invalid) {
       this.indication = true;
+      this.borderInputSurname = false;
+      this.borderInputName = false;
     } else {
       const data = JSON.stringify(this.form.value);
       this.router.navigate(['/succsess']);

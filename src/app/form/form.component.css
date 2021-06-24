@@ -72,12 +72,16 @@
   background-color: rgb(229, 233, 229);
 }
 
-.form_input.ng-invalid.ng-dirty {
-  border: 1px solid red;
-}
-.form_input.ng-valid.ng-dirty {
-  border: 1px solid green;
-}
 .validation {
   color: red;
+}
+
+input.ng-invalid.ng-dirty {
+  border: 1px solid red;
+}
+input.ng-valid.ng-dirty {
+  border: 1px solid green;
+}
+.border {
+  border: 1px solid red;
 }
